@@ -18,7 +18,7 @@ invoiceController.post('/', async (req, res) => {
 })
 
 //Read
-monsterController.get('/', async (req, res) => {
+invoiceController.get('/', async (req, res) => {
     try {
         const foundInvoice = await Invoice.find({})
         res

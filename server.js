@@ -29,6 +29,13 @@ app.use(/\.[0-9a-z]+$/i, express.static('public'));
 app.use('/api/invoices', require('./controllers/invoices')) //you can require items inline instead of assigning to variable at top. industry practice.
 app.use('/api/items', require('./controllers/items'))
 
+app.get('/test', (req, res)=>{
+	res.status(200).json({
+		website: 'My Website',
+		info: 'Not that much'
+	})
+})
+
 /* Controller Ends here */
 //LISTENER
 

@@ -21,7 +21,8 @@ const invoiceSchema = new Schema({
         zipCode: String,
         country: String
     },
-    items: [{type: Schema.Types.ObjectId}]
+    items: [{type: Schema.Types.ObjectId}], 
+    total: Number
 })
 
 module.exports = model('Invoice', invoiceSchema);

@@ -1,0 +1,43 @@
+@use "scss_partials/_reset";
+@use "scss_partials/variables"; //import a file with component css...in this case all teh variables needed
+@import url('https://fonts.googleapis.com/css2?family=Spartan:wght@500;700&display=swap');
+
+
+//run the following command  in terminal to compile scss into css file
+// sass src/css/styles.scss:src/css/styles.css --watch
+
+//universal styles
+
+body {
+    font-family: 'Spartan', sans-serif;
+}
+
+h1 {
+    font-size: 32px;
+    line-height: 36px;
+    letter-spacing: -1;
+}
+
+h2 {
+    font-size:20px;
+    letter-spacing: -0.63;
+    line-height:22px;
+}
+
+h3 {
+    font-size: 16px;
+    line-height:24px;
+    letter-spacing:-0.8;
+}
+
+.body1 {
+    font-size: 12px;
+    line-height: 15px;
+    letter-spacing: -0.25;
+}
+
+.body2 {
+    font-size: 11px;
+    line-height: 18px;
+    letter-spacing: -0.23;
+}

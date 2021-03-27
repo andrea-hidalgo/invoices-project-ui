@@ -18,6 +18,7 @@ invoiceController.post('/', async (req, res) => {
 })
 
 //Read
+//Index
 invoiceController.get('/', async (req, res) => {
     try {
         const foundInvoice = await Invoice.find({})
@@ -26,6 +27,20 @@ invoiceController.get('/', async (req, res) => {
             .json(foundInvoice)
     } catch (error) {
         res.status(400).json(error)
+    }
+})
+
+//Show
+invoiceController.get('/:id', async (req, res) => {
+    try {
+        const foundInvoice = await Invoice.findById(req.params.id)
+        res
+            .status(200)
+            .json(foundInvoice);
+    } catch(error) {
+        res
+            .status(400)
+            .json(error)
     }
 })
 
@@ -56,4 +71,4 @@ invoiceController.put('/:id', async (req, res) =>{
     }
 })
 
-module.exports = monsterController;
+module.exports = invoiceController;

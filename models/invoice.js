@@ -1,9 +1,8 @@
 const { Schema, model } = require('mongoose');
 
 const invoiceSchema = new Schema({
-    id: String,
-    createdAt: Date,
-    paymentDue: Date,
+    invoiceId: String,
+    paymentDue: {type:Date, default: Date.now},
     description: String,
     paymentTerms: Number,
     clientName: String,
@@ -21,8 +20,10 @@ const invoiceSchema = new Schema({
         zipCode: String,
         country: String
     },
-    items: [{type: Schema.Types.ObjectId}], 
+    items: Array, 
     total: Number
+}, {
+    timestamps:true
 })
 
 module.exports = model('Invoice', invoiceSchema);

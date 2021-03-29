@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import '../css/App.css';
 import '../css/styles.css';
 import InvoiceList from '../components/InvoiceList'
+import NewInvoice from '../components/NewInvoice'
 
 export default function App() {
 
@@ -24,6 +25,7 @@ export default function App() {
     <div className="App">
       <h1>Hello World!</h1>
       <InvoiceList invoiceData={invoiceData}></InvoiceList>
+      <NewInvoice/>
     </div>
   );
 }

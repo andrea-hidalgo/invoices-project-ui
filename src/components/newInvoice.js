@@ -1,8 +1,15 @@
-import React from 'react';
+import React,  { useEffect } from 'react';
 import { Formik, Field, Form, FieldArray } from 'formik';
 import * as yup from  'yup';
 
 export default function NewInvoice(props) {
+
+    const itemTotal = (quantity, price) => {
+        console.log('calculating' + price + quantity);
+        return quantity * price
+    }
+
+
 
     const validationSchema = yup.object({
         description: yup.string().required().max(10)
@@ -38,9 +45,9 @@ export default function NewInvoice(props) {
                 <Form>
                     <label htmlFor="description">Description:</label>
                     <Field name="description" type="input" required/>
-            
+
                     <FieldArray name="items">
-                        {(arrayHelpers)=> (
+                        {({insert, remove, push})=> (
                             <div>
                                 {values.items.map((item, index) => {
                                     return (
@@ -52,10 +59,13 @@ export default function NewInvoice(props) {
                                             <label htmlFor={`items.${index}.price`}>Price</label>
                                             <Field name={`items.${index}.price`} placeholder="0" type="number"/>
                                             <label htmlFor={`items.${index}.total`}>Total</label>
-                                            <Field name={`items.${index}.total`} placeholder="0" type="number" disabled faded/>
+                                            <Field name={`items.${index}.total`} placeholder="0" type="number" disabled/>
+                                            {/* <div>{itemTotal(item.quantity, item.price)}</div> */}
+                                            <button type="button" onClick={() => remove(index)}>X</button>
                                         </div>
                                     );
                                 })}
+                                <button type="button" onClick={() => push({name: '', quantity: 1, price: 0, total: 0})}>Add New Item</button> 
                             </div>
                         )}
                     </FieldArray>

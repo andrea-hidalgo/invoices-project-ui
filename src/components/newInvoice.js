@@ -1,5 +1,5 @@
 import React,  { useEffect } from 'react';
-import { Formik, Field, Form, FieldArray, useFormikContext, useField } from 'formik';
+import { Formik, Field, Form, FieldArray, useFormikContext, useField, ErrorMessage } from 'formik';
 import * as yup from  'yup';
 import Item from './Item';
 
@@ -16,7 +16,7 @@ export default function NewInvoice(props) {
             <Formik 
                 initialValues={{ 
                     description: '',
-                    paymentTerms: 1,
+                    paymentTerms: "1",
                     items: [{name: '', quantity: 1, price: 0, total: 0},]
                 }}
                 validationSchema={validationSchema}
@@ -38,10 +38,13 @@ export default function NewInvoice(props) {
                     setSubmitting(false);
                 }}
             >
-                {({ values, errors, isSubmitting, setFieldValue })=>(
+                {({ values, errors, isSubmitting, touched })=>(
                 <Form>
+                    
                     <label htmlFor="description">Description:</label>
                     <Field name="description" type="input" required/>
+                    {/* {errors.description && touched.description ? (<div className="error">{errors.description}</div>) : null} */}
+                    <ErrorMessage name="description" component="div" />
                     <Field as="select" name="paymentTerms" >
                         <option value={1}>Net 1 Day</option>
                         <option value={7}>Net 7 Days</option>
@@ -49,7 +52,7 @@ export default function NewInvoice(props) {
                         <option value={30}>Net 30 Days</option>
                     </Field>
                     <FieldArray name="items">
-                        {({insert, remove, push})=> (
+                        {({remove, push})=> (
                             <div>
                                 {values.items.map((item, index) => {
                                     return (

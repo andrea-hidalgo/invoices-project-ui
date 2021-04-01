@@ -8,12 +8,15 @@ export default function NewInvoice(props) {
     const validationSchema = yup.object({
         description: yup.string().required().max(10)
     })
+
+
     
     return (
         <div className="newInvoice">
             <Formik 
                 initialValues={{ 
                     description: '',
+                    paymentTerms: 1,
                     items: [{name: '', quantity: 1, price: 0, total: 0},]
                 }}
                 validationSchema={validationSchema}
@@ -35,11 +38,16 @@ export default function NewInvoice(props) {
                     setSubmitting(false);
                 }}
             >
-                {({ values, errors, isSubmitting })=>(
+                {({ values, errors, isSubmitting, setFieldValue })=>(
                 <Form>
                     <label htmlFor="description">Description:</label>
                     <Field name="description" type="input" required/>
-
+                    <Field as="select" name="paymentTerms" >
+                        <option value={1}>Net 1 Day</option>
+                        <option value={7}>Net 7 Days</option>
+                        <option value={14}>Net 14 Days</option>
+                        <option value={30}>Net 30 Days</option>
+                    </Field>
                     <FieldArray name="items">
                         {({insert, remove, push})=> (
                             <div>

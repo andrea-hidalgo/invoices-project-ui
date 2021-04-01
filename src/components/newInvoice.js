@@ -1,15 +1,9 @@
 import React,  { useEffect } from 'react';
-import { Formik, Field, Form, FieldArray } from 'formik';
+import { Formik, Field, Form, FieldArray, useFormikContext, useField } from 'formik';
 import * as yup from  'yup';
+import Item from './Item';
 
 export default function NewInvoice(props) {
-
-    const itemTotal = (quantity, price) => {
-        console.log('calculating' + price + quantity);
-        return quantity * price
-    }
-
-
 
     const validationSchema = yup.object({
         description: yup.string().required().max(10)
@@ -51,18 +45,7 @@ export default function NewInvoice(props) {
                             <div>
                                 {values.items.map((item, index) => {
                                     return (
-                                        <div key={index}>
-                                            <label htmlFor={`items.${index}.name`}>Name</label>
-                                            <Field name={`items.${index}.name`} placeholder="Service rendered" type="text"/>
-                                            <label htmlFor={`items.${index}.quantity`}>Quantity</label>
-                                            <Field name={`items.${index}.quantity`} placeholder="1" type="number"/>
-                                            <label htmlFor={`items.${index}.price`}>Price</label>
-                                            <Field name={`items.${index}.price`} placeholder="0" type="number"/>
-                                            <label htmlFor={`items.${index}.total`}>Total</label>
-                                            <Field name={`items.${index}.total`} placeholder="0" type="number" disabled/>
-                                            {/* <div>{itemTotal(item.quantity, item.price)}</div> */}
-                                            <button type="button" onClick={() => remove(index)}>X</button>
-                                        </div>
+                                        <Item key={index} index={index} item={item} remove={remove} values={values}/>
                                     );
                                 })}
                                 <button type="button" onClick={() => push({name: '', quantity: 1, price: 0, total: 0})}>Add New Item</button> 

@@ -1,14 +1,23 @@
 import React,  { useEffect } from 'react';
 import { Formik, Field, Form, FieldArray, useFormikContext, useField, ErrorMessage } from 'formik';
+import { TextField } from '@material-ui/core';
+
 import * as yup from  'yup';
 import Item from './Item';
 
 export default function NewInvoice(props) {
 
     const validationSchema = yup.object({
-        description: yup.string().required().max(10)
+        description: yup.string().required()
     })
 
+    const InputField = ({ placeholder, label, ...props}) => {
+        const [field, meta] = useField(props);
+        const errorText = meta.error && meta.touched ? meta.error : '';
+        return (
+            <TextField {...field} placeholder={placeholder} helperText={errorText} label={label} error={!!errorText} variant="outlined"/>
+        )
+    }
 
     
     return (
@@ -17,7 +26,11 @@ export default function NewInvoice(props) {
                 initialValues={{ 
                     description: '',
                     paymentTerms: "1",
-                    items: [{name: '', quantity: 1, price: 0, total: 0},]
+                    clientName: '',
+                    clientEmail: '',
+                    senderAddress: [{street:'', city: '', zipCode: '', country: ''}],
+                    clientAddress: [{street:'', city: '', zipCode: '', country: ''}],
+                    items: [{name: '', quantity: 1, price: 0, total: 0}]
                 }}
                 validationSchema={validationSchema}
                 // validate={(values) => {
@@ -40,12 +53,10 @@ export default function NewInvoice(props) {
             >
                 {({ values, errors, isSubmitting, touched })=>(
                 <Form>
-                    
-                    <label htmlFor="description">Description:</label>
-                    <Field name="description" type="input" required/>
-                    {/* {errors.description && touched.description ? (<div className="error">{errors.description}</div>) : null} */}
-                    <ErrorMessage name="description" component="div" />
-                    <Field as="select" name="paymentTerms" >
+                    <InputField name="clientName" label="Client Name" type="input"/>
+                    <InputField name="description" label="Description" type="input"/>
+
+                    <Field as="select" name="paymentTerms">
                         <option value={1}>Net 1 Day</option>
                         <option value={7}>Net 7 Days</option>
                         <option value={14}>Net 14 Days</option>

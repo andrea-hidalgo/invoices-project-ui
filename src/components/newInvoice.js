@@ -26,11 +26,7 @@ export default function NewInvoice(props) {
                 initialValues={{ 
                     description: '',
                     paymentTerms: "1",
-                    clientName: '',
-                    clientEmail: '',
-                    senderAddress: [{street:'', city: '', zipCode: '', country: ''}],
-                    clientAddress: [{street:'', city: '', zipCode: '', country: ''}],
-                    items: [{name: '', quantity: 1, price: 0, total: 0}]
+                    items: [{name: '', quantity: 1, price: 0, total: 0},]
                 }}
                 validationSchema={validationSchema}
                 // validate={(values) => {
@@ -55,7 +51,6 @@ export default function NewInvoice(props) {
                 <Form>
                     <InputField name="clientName" label="Client Name" type="input"/>
                     <InputField name="description" label="Description" type="input"/>
-
                     <Field as="select" name="paymentTerms">
                         <option value={1}>Net 1 Day</option>
                         <option value={7}>Net 7 Days</option>

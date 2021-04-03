@@ -1,6 +1,6 @@
 import React from 'react';
-import { Formik, Field, Form, FieldArray, useFormikContext, useField, ErrorMessage } from 'formik';
-import { TextField, Select, MenuItem } from '@material-ui/core';
+import { Formik, Field, Form, FieldArray, useField } from 'formik';
+import { TextField, Select, MenuItem, InputLabel } from '@material-ui/core';
 
 import * as yup from  'yup';
 import Item from './Item';
@@ -19,15 +19,29 @@ export default function NewInvoice(props) {
         )
     }
 
-    
+    // const SelectField = ({labelId, value, label, menuItem, ...props}) => {
+    //     const [field]=useField(props);
+    //     return(
+    //         <>
+    //         <InputLabel id={labelId}>{label}</InputLabel>
+    //         <Select {...field} labelId={labelId} variant="outlined">{menuItem}</Select>
+    //         </>
+    //     )
+    // }
+
+
     return (
-        <div className="newInvoice">
+        <div className="new-invoice-container">
+            <h1 className="">New Invoice</h1>
             <Formik 
                 initialValues={{ 
+                    senderAddress: {street: '', city:'', zipCode:'',country:''},
                     clientName: '',
                     clientEmail: '',
-                    description: '',
+                    clientAddress: {street: '', city:'', zipCode:'',country:''},
+                    createdAt:'',
                     paymentTerms: 1,
+                    description: '',
                     items: [{name: '', quantity: 1, price: 0, total: 0},]
                 }}
                 validationSchema={validationSchema}
@@ -51,27 +65,55 @@ export default function NewInvoice(props) {
             >
                 {({ values, errors, isSubmitting, touched })=>(
                 <Form>
-                    <InputField name="clientName" label="Client Name" type="input"/>
-                    <InputField name="description" label="Description" type="input"/>
+                    <div className="bill-form-container address-top">
+                        <h3>Bill From</h3>
+                        <InputField name="senderAddress.street" type="input" label="Street Address"/>
+                        <div className="address-bottom">
+                            <InputField name="senderAddress.city" type="input" label="City"/>
+                            <InputField name="senderAddress.zipCode" type="input" label="Zip Code"/>
+                            <InputField name="senderAddress.country" type="input" label="Country"/>
+                        </div>
+                    </div>
+                    <div className="bill-to container">
+                        <h3>Bill To</h3>
+                        <InputField name="clientName" label="Client Name" type="input"/>
+                        <InputField name="clientEmail" label="Client Email" type="email"/>
+                        <div className="address-top">
+                            <InputField name="clientAddress.street" type="input" label="Street Address"/>
+                        </div>
+                        <div className="address-bottom">
+                            <InputField name="clientAddress.city" type="input" label="City"/>
+                            <InputField name="clientAddress.zipCode" type="input" label="Zip Code"/>
+                            <InputField name="clientAddress.country" type="input" label="Country"/>
+                        </div>
+                    </div>
 
-                    <Field type="select" as={Select} name="paymentTerms" variant="outlined">
-                        <MenuItem value={1}>Net 1 Day</MenuItem>
-                        <MenuItem value={7}>Net 7 Days</MenuItem>
-                        <MenuItem value={14}>Net 14 Days</MenuItem>
-                        <MenuItem value={30}>Net 30 Days</MenuItem>
-                    </Field>
-                    <FieldArray name="items">
-                        {({remove, push})=> (
-                            <div>
-                                {values.items.map((item, index) => {
-                                    return (
-                                        <Item key={index} index={index} item={item} remove={remove} values={values} InputField={InputField} />
-                                    );
-                                })}
-                                <button type="button" onClick={() => push({name: '', quantity: 1, price: 0, total: 0})}>+ Add New Item</button> 
-                            </div>
-                        )}
-                    </FieldArray>
+                    <div className="invoice-payments">
+                        <InputField name="createdAt" type="date" label="Invoice Date"/>
+                        <Field type="select" as={Select} name="paymentTerms" variant="outlined">
+                            <option value={1}>Net 1 Day</option>
+                            <option value={7}>Net 7 Days</option>
+                            <option value={14}>Net 14 Days</option>
+                            <option value={30}>Net 30 Days</option>
+                        </Field>
+                    </div>
+
+                    <InputField name="description" label="Project Description" type="input" placeholder="e.g Graphic Design Service"/>
+                    <div className="items-form-container">
+                        <h2>Item List</h2>
+                        <FieldArray name="items">
+                            {({remove, push})=> (
+                                <div>
+                                    {values.items.map((item, index) => {
+                                        return (
+                                            <Item key={index} index={index} item={item} remove={remove} values={values} InputField={InputField} />
+                                        );
+                                    })}
+                                    <button type="button" onClick={() => push({name: '', quantity: 1, price: 0, total: 0})}>+ Add New Item</button> 
+                                </div>
+                            )}
+                        </FieldArray>
+                    </div>
                     <input disabled={ isSubmitting } type="submit"/>
                     <pre>{JSON.stringify(values,null,2)}</pre>
                     <pre>{JSON.stringify(errors,null,2)}</pre>

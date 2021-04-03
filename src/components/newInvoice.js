@@ -1,6 +1,6 @@
-import React,  { useEffect } from 'react';
+import React from 'react';
 import { Formik, Field, Form, FieldArray, useFormikContext, useField, ErrorMessage } from 'formik';
-import { TextField } from '@material-ui/core';
+import { TextField, Select, MenuItem } from '@material-ui/core';
 
 import * as yup from  'yup';
 import Item from './Item';
@@ -11,11 +11,11 @@ export default function NewInvoice(props) {
         description: yup.string().required()
     })
 
-    const InputField = ({ placeholder, label, ...props}) => {
+    const InputField = ({ placeholder, label, type, ...props}) => {
         const [field, meta] = useField(props);
         const errorText = meta.error && meta.touched ? meta.error : '';
         return (
-            <TextField {...field} placeholder={placeholder} helperText={errorText} label={label} error={!!errorText} variant="outlined"/>
+            <TextField {...field} type={type} placeholder={placeholder} helperText={errorText} label={label} error={!!errorText} variant="outlined"/>
         )
     }
 
@@ -24,8 +24,10 @@ export default function NewInvoice(props) {
         <div className="newInvoice">
             <Formik 
                 initialValues={{ 
+                    clientName: '',
+                    clientEmail: '',
                     description: '',
-                    paymentTerms: "1",
+                    paymentTerms: 1,
                     items: [{name: '', quantity: 1, price: 0, total: 0},]
                 }}
                 validationSchema={validationSchema}
@@ -51,21 +53,22 @@ export default function NewInvoice(props) {
                 <Form>
                     <InputField name="clientName" label="Client Name" type="input"/>
                     <InputField name="description" label="Description" type="input"/>
-                    <Field as="select" name="paymentTerms">
-                        <option value={1}>Net 1 Day</option>
-                        <option value={7}>Net 7 Days</option>
-                        <option value={14}>Net 14 Days</option>
-                        <option value={30}>Net 30 Days</option>
+
+                    <Field type="select" as={Select} name="paymentTerms" variant="outlined">
+                        <MenuItem value={1}>Net 1 Day</MenuItem>
+                        <MenuItem value={7}>Net 7 Days</MenuItem>
+                        <MenuItem value={14}>Net 14 Days</MenuItem>
+                        <MenuItem value={30}>Net 30 Days</MenuItem>
                     </Field>
                     <FieldArray name="items">
                         {({remove, push})=> (
                             <div>
                                 {values.items.map((item, index) => {
                                     return (
-                                        <Item key={index} index={index} item={item} remove={remove} values={values}/>
+                                        <Item key={index} index={index} item={item} remove={remove} values={values} InputField={InputField} />
                                     );
                                 })}
-                                <button type="button" onClick={() => push({name: '', quantity: 1, price: 0, total: 0})}>Add New Item</button> 
+                                <button type="button" onClick={() => push({name: '', quantity: 1, price: 0, total: 0})}>+ Add New Item</button> 
                             </div>
                         )}
                     </FieldArray>

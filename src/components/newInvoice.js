@@ -1,11 +1,22 @@
-import React from 'react';
-import { Formik, Field, Form, FieldArray, useField } from 'formik';
+import React, { useEffect } from 'react';
+import { Formik, Field, Form, FieldArray, useField, useFormikContext } from 'formik';
 import { TextField, Select, MenuItem, InputLabel } from '@material-ui/core';
 
 import * as yup from  'yup';
 import Item from './Item';
 
 export default function NewInvoice(props) {
+
+    const calculateTotal = async (values) => {
+        let total= 0;
+        const calculateItemTotal = values.items.map((item, index) => {
+            if (typeof(values.items[index].total) == "number") {
+                total += values.items[index].total
+            }
+        })
+        console.log(total)
+        return total;
+    }
 
     const validationSchema = yup.object({
         description: yup.string().required()
@@ -45,17 +56,9 @@ export default function NewInvoice(props) {
                     items: [{name: '', quantity: 1, price: 0, total: 0},]
                 }}
                 validationSchema={validationSchema}
-                // validate={(values) => {
-                //     const errors = {};
-
-                //     if (values.description.includes("bob")) {
-                //         errors.description  = "no bob";
-                //     }
-
-                //     return errors;
-                // }}
                 onSubmit={(data, {setSubmitting}) => {
                     setSubmitting(true);
+                    calculateTotal(data);
                     //make async call 
                     // setSubmitting will make something happen (or not happen) while the form is in the process of being submitted
                     // in this case, while the async post request is happening, we could disable the submit button, so the form can't be submitted twice by mistake
@@ -90,7 +93,7 @@ export default function NewInvoice(props) {
 
                     <div className="invoice-payments">
                         <InputField name="createdAt" type="date" label="Invoice Date"/>
-                        <Field type="select" as={Select} name="paymentTerms" variant="outlined">
+                        <Field as={Select} name="paymentTerms" variant="outlined" defaultValue={1}>
                             <option value={1}>Net 1 Day</option>
                             <option value={7}>Net 7 Days</option>
                             <option value={14}>Net 14 Days</option>

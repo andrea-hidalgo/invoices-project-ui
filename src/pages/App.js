@@ -24,8 +24,9 @@ export default function App() {
   return (
     <div className="App">
       <h1>Hello World!</h1>
-      <InvoiceList invoiceData={invoiceData}></InvoiceList>
-      <NewInvoice/>
+      {invoiceData.length ? (<InvoiceList invoiceData={invoiceData}></InvoiceList>) : ('')}
+      
+      <NewInvoice invoiceData={invoiceData} setInvoiceData={setInvoiceData}/>
     </div>
   );
 }

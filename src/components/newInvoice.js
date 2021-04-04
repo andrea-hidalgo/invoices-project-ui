@@ -7,15 +7,32 @@ import Item from './Item';
 
 export default function NewInvoice(props) {
 
-    const calculateTotal = async (values) => {
+    const calculateTotal = (values) => {
         let total= 0;
-        const calculateItemTotal = values.items.map((item, index) => {
+        values.items.map((item, index) => {
             if (typeof(values.items[index].total) == "number") {
                 total += values.items[index].total
             }
         })
-        console.log(total)
         return total;
+    }
+
+    const calculateDueDate = (values) => {
+        const createdAt = new Date(values.createdAt);
+        const paymentTerms = values.paymentTerms;
+        const formatDate = new Date(Number(createdAt));
+        formatDate.setDate(createdAt.getDate() + paymentTerms);
+        return formatDate;
+    }
+
+    const generateId = () => {
+        const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        const letter1 = alphabet[Math.floor(Math.random() * alphabet.length)];
+        const letter2 = alphabet[Math.floor(Math.random() * alphabet.length)];
+        const letters = letter1 + letter2;
+        const numbers = Math.floor(Math.random() * (9999 - 1000 + 1) + 1000);
+        const id = letters + numbers;
+        return id; 
     }
 
     const validationSchema = yup.object({
@@ -46,19 +63,37 @@ export default function NewInvoice(props) {
             <h1 className="">New Invoice</h1>
             <Formik 
                 initialValues={{ 
-                    senderAddress: {street: '', city:'', zipCode:'',country:''},
+                    senderAddress: {street: '', city:'', state: '', zipCode:'',country:''},
                     clientName: '',
                     clientEmail: '',
-                    clientAddress: {street: '', city:'', zipCode:'',country:''},
+                    clientAddress: {street: '', city:'', state: '', zipCode:'',country:''},
                     createdAt:'',
                     paymentTerms: 1,
                     description: '',
-                    items: [{name: '', quantity: 1, price: 0, total: 0},]
+                    items: [{name: '', quantity: 1, price: 0, total: 0},],
+                    total: 0,
+                    status: 'pending'
                 }}
                 validationSchema={validationSchema}
-                onSubmit={(data, {setSubmitting}) => {
+                onSubmit={ async (data, {setSubmitting}) => {
                     setSubmitting(true);
-                    calculateTotal(data);
+                    const itemTotal= calculateTotal(data);
+                    const dueDate = calculateDueDate(data);
+                    const invoiceId = generateId();
+                    const body = JSON.stringify({...data, total: itemTotal, paymentDue: dueDate, invoiceId: invoiceId})
+                    try {
+                        const response = await fetch('api/invoices', {
+                            method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: body
+                        })
+                        const submittedData = await response.json();
+                        props.setInvoiceData([...props.invoiceData, submittedData])
+                    } catch(error) {
+                        console.error(error);
+                    }
                     //make async call 
                     // setSubmitting will make something happen (or not happen) while the form is in the process of being submitted
                     // in this case, while the async post request is happening, we could disable the submit button, so the form can't be submitted twice by mistake
@@ -73,6 +108,7 @@ export default function NewInvoice(props) {
                         <InputField name="senderAddress.street" type="input" label="Street Address"/>
                         <div className="address-bottom">
                             <InputField name="senderAddress.city" type="input" label="City"/>
+                            <InputField name="senderAddress.state" type="input" label="State"/>
                             <InputField name="senderAddress.zipCode" type="input" label="Zip Code"/>
                             <InputField name="senderAddress.country" type="input" label="Country"/>
                         </div>
@@ -86,6 +122,7 @@ export default function NewInvoice(props) {
                         </div>
                         <div className="address-bottom">
                             <InputField name="clientAddress.city" type="input" label="City"/>
+                            <InputField name="clientAddress.state" type="input" label="State"/>
                             <InputField name="clientAddress.zipCode" type="input" label="Zip Code"/>
                             <InputField name="clientAddress.country" type="input" label="Country"/>
                         </div>
@@ -93,7 +130,7 @@ export default function NewInvoice(props) {
 
                     <div className="invoice-payments">
                         <InputField name="createdAt" type="date" label="Invoice Date"/>
-                        <Field as={Select} name="paymentTerms" variant="outlined" defaultValue={1}>
+                        <Field as={Select} name="paymentTerms" variant="outlined">
                             <option value={1}>Net 1 Day</option>
                             <option value={7}>Net 7 Days</option>
                             <option value={14}>Net 14 Days</option>

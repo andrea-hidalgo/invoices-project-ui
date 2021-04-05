@@ -30,16 +30,14 @@ export default function App() {
   return (
     <div className="App">
       <Header 
-        newInvoiceHidden={newInvoiceHidden} 
-        toggleNewInvoiceHidden={toggleNewInvoiceHidden}/>
+        toggleInvoiceHide={toggleInvoiceHide}/>
       {invoiceData.length ? (
         <InvoiceList 
           invoiceData={invoiceData} />) : ('')}
       {newInvoiceHidden.invoiceHidden === false ? (
         <NewInvoice 
           invoiceData={invoiceData} 
-          setInvoiceData={setInvoiceData} 
-          newInvoiceHidden={newInvoiceHidden} 
+          setInvoiceData={setInvoiceData}
           toggleInvoiceHide={toggleInvoiceHide}/>) : ''}
     </div>
   );

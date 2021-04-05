@@ -9,7 +9,7 @@ export default function Header (props) {
           <p className="body1">There are X total invoices</p>
         </div>
         <div className="header-right">
-          <button onClick={toggleInvoiceHide}>+ New Invoice</button>
+          <button onClick={()=>props.toggleInvoiceHide()}>+ New Invoice</button>
         </div>
       </header>
     )

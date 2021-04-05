@@ -154,7 +154,7 @@ export default function NewInvoice(props) {
                             )}
                         </FieldArray>
                     </div>
-                    <button onclick={toggleInvoiceHide()}>Discard</button>
+                    <button onClick={() =>props.toggleInvoiceHide()}>Discard</button>
                     <input disabled={ isSubmitting } type="submit"/>
                     {/* <pre>{JSON.stringify(values,null,2)}</pre>
                     <pre>{JSON.stringify(errors,null,2)}</pre> */}

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 export default function InvoiceList(props) {
 
@@ -11,14 +12,16 @@ export default function InvoiceList(props) {
 
     return (
         <div>
-            {props.invoiceData.map((invoice,index) =>{
+            {props.invoicesData.map((invoice,index) =>{
                 return (
                     <div key={index}>
-                        <h4>#{invoice.invoiceId}</h4>
-                        <p>Due {dueDate(invoice)}</p>
-                        <p>{invoice.clientName}</p>
-                        <h3>${invoice.total}</h3>
-                        <h3>{invoice.status}</h3>
+                        {/* <Link to={`/${invoice._id}`}> */}
+                            <h4>#{invoice.invoiceId}</h4>
+                            <p>Due {dueDate(invoice)}</p>
+                            <p>{invoice.clientName}</p>
+                            <h3>${invoice.total}</h3>
+                            <h3>{invoice.status}</h3>
+                        {/* </Link> */}
                     </div>
                 )
             })}

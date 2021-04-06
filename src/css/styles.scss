@@ -15,29 +15,48 @@ body {
 h1 {
     font-size: 32px;
     line-height: 36px;
-    letter-spacing: -1;
+    letter-spacing: -1px;
+    font-weight:700;
 }
 
 h2 {
     font-size:20px;
-    letter-spacing: -0.63;
     line-height:22px;
+    letter-spacing: -0.63px;
+    font-weight:700;
 }
 
 h3 {
     font-size: 16px;
     line-height:24px;
-    letter-spacing:-0.8;
+    letter-spacing:-0.8px;
+    font-weight:700;
+}
+
+h4 {
+    font-size: 12px;
+    line-height: 15px;
+    letter-spacing: -0.25px;
+    font-weight: 700;
+}
+
+.bold-text {
+    font-size:15px;
+    line-height: 24px;
+    letter-spacing: -0.31px;
+    font-weight: 700;
 }
 
 .body1 {
     font-size: 12px;
     line-height: 15px;
-    letter-spacing: -0.25;
+    letter-spacing: -0.25px;
+    font-weight: 500;
 }
 
 .body2 {
     font-size: 11px;
     line-height: 18px;
-    letter-spacing: -0.23;
+    letter-spacing: -0.23px;
+    font-weight: 500;
 }

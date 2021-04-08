@@ -12,32 +12,33 @@ export default function App() {
     toggleNewInvoiceHidden({invoiceHidden: !newInvoiceHidden.invoiceHidden});
   }
 
-  const [invoiceData, setInvoiceData] = useState([]);
+  const [invoicesData, setInvoicesData] = useState([]);
 
   useEffect(() => {
     (async () => {
       try {
         const response= await fetch('/api/invoices');
         const data = await response.json();
-        setInvoiceData(data);
+        setInvoicesData(data);
       } catch (err) {
         console.error(err)
       }
     })();
-  })
+  },[])
 
 
   return (
     <div className="App">
       <Header 
-        toggleInvoiceHide={toggleInvoiceHide}/>
-      {invoiceData.length ? (
+        toggleInvoiceHide={toggleInvoiceHide}
+        invoicesData={invoicesData} />
+      {invoicesData.length ? (
         <InvoiceList 
-          invoiceData={invoiceData} />) : ('')}
+          invoicesData={invoicesData} />) : ('')}
       {newInvoiceHidden.invoiceHidden === false ? (
         <NewInvoice 
-          invoiceData={invoiceData} 
-          setInvoiceData={setInvoiceData}
+          invoicesData={invoicesData} 
+          setInvoicesData={setInvoicesData}
           toggleInvoiceHide={toggleInvoiceHide}/>) : ''}
     </div>
   );

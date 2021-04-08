@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { Formik, Field, Form, FieldArray, useField, useFormikContext } from 'formik';
+import React from 'react';
+import { Formik, Field, Form, FieldArray, useField } from 'formik';
 import { TextField, Select, MenuItem, InputLabel } from '@material-ui/core';
 
 import * as yup from  'yup';
@@ -36,7 +36,9 @@ export default function NewInvoice(props) {
     }
 
     const validationSchema = yup.object({
-        description: yup.string().required()
+        description: yup.string().required(),
+        clientName: yup.string().required(),
+        clientEmail: yup.string().email().required()
     })
 
     const InputField = ({ placeholder, label, type, ...props}) => {
@@ -46,17 +48,6 @@ export default function NewInvoice(props) {
             <TextField {...field} type={type} placeholder={placeholder} helperText={errorText} label={label} error={!!errorText} variant="outlined"/>
         )
     }
-
-    // const SelectField = ({labelId, value, label, menuItem, ...props}) => {
-    //     const [field]=useField(props);
-    //     return(
-    //         <>
-    //         <InputLabel id={labelId}>{label}</InputLabel>
-    //         <Select {...field} labelId={labelId} variant="outlined">{menuItem}</Select>
-    //         </>
-    //     )
-    // }
-
 
     return (
         <div className="new-invoice-container">
@@ -82,7 +73,7 @@ export default function NewInvoice(props) {
                     const invoiceId = generateId();
                     const body = JSON.stringify({...data, total: itemTotal, paymentDue: dueDate, invoiceId: invoiceId})
                     try {
-                        const response = await fetch('api/invoices', {
+                        const response = await fetch('/api/invoices', {
                             method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
@@ -90,7 +81,7 @@ export default function NewInvoice(props) {
                         body: body
                         })
                         const submittedData = await response.json();
-                        props.setInvoiceData([...props.invoiceData, submittedData])
+                        props.setInvoicesData([...props.invoicesData, submittedData])
                     } catch(error) {
                         console.error(error);
                     }
@@ -101,7 +92,7 @@ export default function NewInvoice(props) {
                     setSubmitting(false);
                 }}
             >
-                {({ values, errors, isSubmitting, touched })=>(
+                {({ values, isSubmitting, errors })=>(
                 <Form>
                     <div className="bill-form-container address-top">
                         <h3>Bill From</h3>
@@ -131,10 +122,10 @@ export default function NewInvoice(props) {
                     <div className="invoice-payments">
                         <InputField name="createdAt" type="date" label="Invoice Date"/>
                         <Field as={Select} name="paymentTerms" variant="outlined">
-                            <option value={1}>Net 1 Day</option>
-                            <option value={7}>Net 7 Days</option>
-                            <option value={14}>Net 14 Days</option>
-                            <option value={30}>Net 30 Days</option>
+                            <MenuItem value={1}>Net 1 Day</MenuItem>
+                            <MenuItem value={7}>Net 7 Days</MenuItem>
+                            <MenuItem value={14}>Net 14 Days</MenuItem>
+                            <MenuItem value={30}>Net 30 Days</MenuItem>
                         </Field>
                     </div>
 
@@ -156,8 +147,8 @@ export default function NewInvoice(props) {
                     </div>
                     <button onClick={() =>props.toggleInvoiceHide()}>Discard</button>
                     <input disabled={ isSubmitting } type="submit"/>
-                    {/* <pre>{JSON.stringify(values,null,2)}</pre>
-                    <pre>{JSON.stringify(errors,null,2)}</pre> */}
+                    <pre>{JSON.stringify(values,null,2)}</pre>
+                    <pre>{JSON.stringify(errors,null,2)}</pre> 
                 </Form>
             )}</Formik>
         </div>

@@ -14,15 +14,17 @@ export default function InvoiceList(props) {
         <div>
             {props.invoicesData.map((invoice,index) =>{
                 return (
-                    <div key={index}>
-                            <h4><span>#</span>{invoice.invoiceId}</h4>
-                            <p>Due {dueDate(invoice)}</p>
-                            <p>{invoice.clientName}</p>
-                            <h3>${invoice.total}</h3>
-                            <h4>{invoice.status}</h4>
-                            <Link to={`/${invoice._id}`}>
-                                <div>&#62;</div>
-                            </Link>
+                    <div className="invoice-list-item-container"key={index}>
+                        <Link to={`/${invoice._id}`}>
+                            <div>
+                                <h4><span>#</span>{invoice.invoiceId}</h4>
+                                <p className="body1">Due {dueDate(invoice)}</p>
+                                <p className="body1">{invoice.clientName}</p>
+                                <h3>${invoice.total}</h3>
+                                <h4>{invoice.status}</h4>
+                                <p className="hide-mobile">&#62;</p>
+                            </div>
+                        </Link>
                     </div>
                 )
             })}

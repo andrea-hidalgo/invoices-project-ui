@@ -10,7 +10,7 @@
 
 body {
     font-family: 'Spartan', sans-serif;
-    background-color: v.$off-white;
+    background-color: v.$background;
 }
 
 h1 {
@@ -90,15 +90,22 @@ button {
     }
 }
 
-@mixin main-container {
-    width: 730px;
+.hide-mobile {
+    @media (max-width: 375px) {
+        display:none;
+    }
+}
 
-    @media only screen and (max-width: 768px) {
+@mixin main-container {
+    max-width: 327px;
+    min-width: 259px;
+
+    @media (min-width: 376px) {
         max-width: 672px;
     }
 
-    @media only screen and (max-width: 375px) {
-        max-width: 327px;
+    @media (min-width: 768px) {
+        max-width: 730px;
     }
 }
 
@@ -106,7 +113,7 @@ button {
     @include main-container;
     height: 59px;
     display:flex;
-    flex-flow: row wrap;
+    flex-flow: row nowrap;
     justify-content: space-between;
     align-items: center;
 
@@ -119,3 +126,44 @@ button {
         }
     }
 }
+
+.invoice-list-item-container {
+    @include main-container;
+    border-radius: 8px;
+    margin-bottom:7px;
+    background-color: white;
+    &:hover {
+        border: solid 1px v.$button1;
+    }
+
+    a {
+        text-decoration: none;
+        color: inherit;
+    }
+
+    a div {
+        display:flex;
+        flex-flow: row wrap;
+        justify-content: space-around;
+        align-items: center;
+        height: 134px;
+
+        @media (min-width: 376px) {
+            height: 72px;
+            flex-flow: row nowrap;
+        }
+    }
+}
+
+.invoice-list-item-container * {
+    &:not(:last-child) {
+        width :20%;
+
+    }
+
+    &:last-child {
+        margin-right: 10px;
+    }
+
+}
+

@@ -82,9 +82,9 @@ export default function Invoice (props) {
                         </div>
                     </div>
                     <div className="invoice-page-header-right">
-                        <button className="edit-button" onClick={toggleEditHide}>Edit</button>
+                        <button className="edit-button button3" onClick={toggleEditHide}>Edit</button>
                         <button className="delete-button" onClick={handleDelete}>Delete</button>
-                        <button className="paid-button" onClick={handlePaid}>Mark as Paid</button>
+                        <button className="paid-button button1" onClick={handlePaid}>Mark as Paid</button>
                     </div>
                 </div>
             </header>

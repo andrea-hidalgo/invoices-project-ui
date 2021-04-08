@@ -1,5 +1,5 @@
 @use "scss_partials/_reset";
-@use "scss_partials/variables"; //import a file with component css...in this case all teh variables needed
+@use "scss_partials/variables" as v; //import a file with component css...in this case all teh variables needed
 @import url('https://fonts.googleapis.com/css2?family=Spartan:wght@500;700&display=swap');
 
 
@@ -10,6 +10,7 @@
 
 body {
     font-family: 'Spartan', sans-serif;
+    background-color: v.$off-white;
 }
 
 h1 {
@@ -59,4 +60,62 @@ h4 {
     line-height: 18px;
     letter-spacing: -0.23px;
     font-weight: 500;
+}
+
+button {
+    border-radius: 50px;
+    padding: 16px;
+    height: 48px;
+    border: none;
+    font-size: 12px;
+    line-height: 15px;
+    letter-spacing: -0.25px;
+    font-weight: 700;
+    font-family: inherit;
+}
+
+.button1 {
+    background-color: v.$button1;
+    color: v.$off-white;
+    &:hover {
+        background-color: v.$button1-hover;
+    }
+}
+
+.button3 {
+    background-color: v.$button3;
+    color: v.$button3-color;
+    &:hover {
+        background-color: v.$button3-hover;
+    }
+}
+
+@mixin main-container {
+    width: 730px;
+
+    @media only screen and (max-width: 768px) {
+        max-width: 672px;
+    }
+
+    @media only screen and (max-width: 375px) {
+        max-width: 327px;
+    }
+}
+
+#invoice-list-header {
+    @include main-container;
+    height: 59px;
+    display:flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    align-items: center;
+
+    .header-left {
+        display:flex;
+        flex-flow: column;
+        justify-content: flex-start;
+        h1{
+            max-width: 135px;
+        }
+    }
 }

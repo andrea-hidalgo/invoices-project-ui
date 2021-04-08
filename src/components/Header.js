@@ -10,14 +10,15 @@ export default function Header (props) {
       return 'no'
     }
   }
+
     return (
-        <header>
+        <header id="invoice-list-header">
         <div className="header-left">
           <h1>Invoices</h1>
           <p className="body1">There are {countInvoices()} invoices</p>
         </div>
         <div className="header-right">
-          <button onClick={()=>props.toggleInvoiceHide()}>+ New Invoice</button>
+          <button className="button1" onClick={()=>props.toggleInvoiceHide()}>+ New Invoice</button>
         </div>
       </header>
     )

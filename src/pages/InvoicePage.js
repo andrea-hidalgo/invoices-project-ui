@@ -141,9 +141,11 @@ export default function Invoice (props) {
                                         <h4>{item.name}</h4>
                                     </div>
                                     <div className="item-container-right">
-                                        <p className="body1">{item.quantity} <span className="hide-desktop"> x </span></p>
-                                        <p className="body1 items-qty-header">${item.price}</p>
-                                        <p className="body1">${item.total}</p>
+                                        <div>
+                                            <p className="body1">{item.quantity} <span className="hide-desktop"> x&nbsp;</span></p>
+                                            <p className="body1 items-qty-header">$ {item.price}</p>
+                                        </div>
+                                        <p className="body1">$ {item.total}</p>
                                     </div>
                                 </div>
                                 
@@ -151,7 +153,7 @@ export default function Invoice (props) {
                         })}
                     </div>
                     <div className="invoice-page-grand-total">
-                        <p className="body2">Amount Due</p>
+                        <p className="body2">Grand Total</p>
                         <h2>$ {invoice.total}</h2>
                     </div>
                 </div>

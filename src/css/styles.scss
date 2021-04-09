@@ -350,8 +350,31 @@ $desktop: 768px;
             }
 
             .invoice-page-items-list {
-                font-weight: 700;
+                p{font-weight: 700}
+                .item-container {
+                    height: 38px;
+                    margin-bottom:24px;
+                    .item-container-left{
+                        h4 {
+                            margin-bottom: 8px;
+                        }
+                    }
+
+                    .item-container-right {
+                        display: flex;
+                        flex-flow: row nowrap;
+                        justify-content: space-between;
+                        div:first-child {
+                            display: flex;
+                            flex-flow: row nowrap;
+                            justify-content: flex-start;
+                            width:40%;
+                        }
+                    }
+                }
             }
+
+            
         }
     }
 }

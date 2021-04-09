@@ -152,11 +152,12 @@ export default function Invoice (props) {
                             )
                         })}
                     </div>
-                    <div className="invoice-page-grand-total">
+                    
+                </div>
+                <div className="invoice-page-grand-total">
                         <p className="body2">Grand Total</p>
                         <h2>$ {invoice.total}</h2>
                     </div>
-                </div>
             </section>
         </div>
         ) : <></>}

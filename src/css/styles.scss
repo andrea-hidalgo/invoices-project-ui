@@ -195,7 +195,7 @@ $desktop: 768px;
 // InvoicePage
 #invoice-page-container {
     padding: 0 5%;
-    padding-bottom: 200px;
+    padding-bottom: 100px;
     a {
         text-decoration: none;   
         p {
@@ -338,6 +338,10 @@ $desktop: 768px;
                 width: 100%;
                 display: flex;
                 flex-flow: row nowrap;
+                @media (min-width: $tablet) {
+                    margin-bottom: 32px;
+                }
+
                 :first-child{
                     width: 50%;
                 }
@@ -353,10 +357,22 @@ $desktop: 768px;
                 p{font-weight: 700}
                 .item-container {
                     height: 38px;
-                    margin-bottom:24px;
+                    &:not(:last-child) {
+                        margin-bottom:24px;
+                    }
+                    @media (min-width: $tablet) {
+                        width:100%;
+                        display: flex;
+                        flex-flow: row nowrap;
+                        justify-content: space-between;
+                    }
+
                     .item-container-left{
                         h4 {
                             margin-bottom: 8px;
+                        }
+                        @media (min-width: $tablet) {
+                            width:50%;
                         }
                     }
 
@@ -364,17 +380,51 @@ $desktop: 768px;
                         display: flex;
                         flex-flow: row nowrap;
                         justify-content: space-between;
+
+                        @media (min-width: $tablet) {
+                            justify-content: flex-end;
+                            width:50%;
+
+                            > p {
+                                width:40%;
+                                text-align: right;
+                                color: inherit;
+                            }
+                        }
+                    
                         div:first-child {
                             display: flex;
                             flex-flow: row nowrap;
                             justify-content: flex-start;
                             width:40%;
+
+                            @media (min-width: $tablet) {
+                                justify-content: space-between;
+                                width:60%;
+                            }
                         }
+
                     }
                 }
             }
 
-            
+        }
+        .invoice-page-grand-total {
+            border-radius: 0 0 8px 8px;
+            background-color: v.$grand-total-background;
+            color: white;
+            height:80px;
+            display: flex;
+            flex-flow: row nowrap;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1em;
+            width: 100%;
+            @media (min-width: $tablet) {
+                padding: 2em;
+            }
+            p {color:white;}
+
         }
     }
 }

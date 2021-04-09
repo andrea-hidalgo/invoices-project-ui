@@ -134,9 +134,9 @@ export default function Invoice (props) {
                         </div>
                     </div>
                     <div className="invoice-page-items-list">
-                        {invoice.items.map((item) => {
+                        {invoice.items.map((item, index) => {
                             return (
-                                <div className="item-container">
+                                <div key={index} className="item-container">
                                     <div className="item-container-left">
                                         <h4>{item.name}</h4>
                                     </div>

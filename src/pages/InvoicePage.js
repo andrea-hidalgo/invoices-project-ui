@@ -70,11 +70,9 @@ export default function Invoice (props) {
     return (
         <>
         {Object.keys(invoice).length ? ( 
-        <div className="Invoice-page-container">
-            
+        <div id="invoice-page-container">
+            <Link to={'/'}><p className="body1"><span>&#60;</span> Go back</p></Link>
             <header>
-                <Link to={'/'}><p className="body1">Go back</p></Link>
-                <div className="invoice-page-header-block">
                     <div className="invoice-page-header-left">
                         <p className="body1">Status</p>
                         <div className="invoice-status">
@@ -83,12 +81,11 @@ export default function Invoice (props) {
                     </div>
                     <div className="invoice-page-header-right">
                         <button className="edit-button button3" onClick={toggleEditHide}>Edit</button>
-                        <button className="delete-button" onClick={handleDelete}>Delete</button>
+                        <button className="delete-button button5" onClick={handleDelete}>Delete</button>
                         <button className="paid-button button1" onClick={handlePaid}>Mark as Paid</button>
                     </div>
-                </div>
             </header>
-            <section className="invoice-page-info-block">
+            <section id="invoice-page-info-block">
                 <div className="invoice-page-info-top">
                     <div>
                         <h3 className="invoice-id"><span>#</span>{invoice.invoiceId}</h3>
@@ -102,25 +99,23 @@ export default function Invoice (props) {
                     </div>
                 </div>
                 <div className="invoice-page-info-mid">
-                    <div className="invoice-page-date-address">
-                        <div className="invoice-page-dates">
-                            <div>
-                                <p className="body1">Invoice Date</p>
-                                <p className="bold-text">{formatDate(invoice.createdAt)}</p>
-                            </div>
-                            <div>
-                                <p className="body1">Payment Due Date</p>
-                                <p className="bold-text">{formatDate(invoice.paymentDue)}</p>
-                            </div>
+                    <div className="invoice-page-dates">
+                        <div>
+                            <p className="body1">Invoice Date</p>
+                            <p className="bold-text">{formatDate(invoice.createdAt)}</p>
                         </div>
-                        <div className="invoice-page-client-address">
-                            <p className="body1">Bill To</p>
-                            <p className="bold-text">{invoice.clientName}</p>
-                            <p className="body2">{invoice.clientAddress.street}</p>
-                            <p className="body2">{invoice.clientAddress.city}<span>, {invoice.clientAddress.state}</span></p>
-                            <p className="body2">{invoice.clientAddress.zipCode}</p>
-                            <p className="body2">{invoice.clientAddress.country}</p>
+                        <div>
+                            <p className="body1">Payment Due</p>
+                            <p className="bold-text">{formatDate(invoice.paymentDue)}</p>
                         </div>
+                    </div>
+                    <div className="invoice-page-client-address">
+                        <p className="body1">Bill To</p>
+                        <p className="bold-text">{invoice.clientName}</p>
+                        <p className="body2">{invoice.clientAddress.street}</p>
+                        <p className="body2">{invoice.clientAddress.city}<span>, {invoice.clientAddress.state}</span></p>
+                        <p className="body2">{invoice.clientAddress.zipCode}</p>
+                        <p className="body2">{invoice.clientAddress.country}</p>
                     </div>
                     <div className="invoice-page-email">
                         <p className="body1">Sent to</p>
@@ -128,7 +123,7 @@ export default function Invoice (props) {
                     </div>
                 </div>
                 <div className="invoice-page-items">
-                    <div className="invoice-page-items-header">
+                    <div className="invoice-page-items-header hide-mobile">
                         <div className="invoice-page-items-header-left">
                             <p className="body2">Item Name</p>
                         </div>
@@ -146,9 +141,9 @@ export default function Invoice (props) {
                                         <h4>{item.name}</h4>
                                     </div>
                                     <div className="item-container-right">
-                                        <p className="body2">{item.quantity}</p>
-                                        <p className="body2 items-qty-header">{item.price}</p>
-                                        <p className="body2">{item.total}</p>
+                                        <p className="body1">{item.quantity} <span className="hide-desktop"> x </span></p>
+                                        <p className="body1 items-qty-header">${item.price}</p>
+                                        <p className="body1">${item.total}</p>
                                     </div>
                                 </div>
                                 

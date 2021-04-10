@@ -42,8 +42,8 @@ export default function NewInvoice(props) {
     })
 
     return (
-        <div className="new-invoice-container">
-            <h1 className="">New Invoice</h1>
+        <div className="main-invoice-form-container">
+            <h1 className="form-title">New Invoice</h1>
             <Formik 
                 initialValues={{ 
                     senderAddress: {street: '', city:'', state: '', zipCode:'',country:''},
@@ -87,10 +87,10 @@ export default function NewInvoice(props) {
                 {({ values, isSubmitting, errors })=>(
                 <Form>
                     <FormFields values={values}/>
-                    <button onClick={() =>props.toggleInvoiceHide()}>Discard</button>
-                    <input disabled={ isSubmitting } type="submit"/>
-                    <pre>{JSON.stringify(values,null,2)}</pre>
-                    <pre>{JSON.stringify(errors,null,2)}</pre> 
+                    <button onClick={() =>props.toggleInvoiceHide()} className="button3">Discard</button>
+                    <input disabled={ isSubmitting } type="submit" className="button1"/>
+                    {/* <pre>{JSON.stringify(values,null,2)}</pre>
+                    <pre>{JSON.stringify(errors,null,2)}</pre>  */}
                 </Form>
             )}</Formik>
         </div>

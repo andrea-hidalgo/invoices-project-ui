@@ -48,8 +48,8 @@ export default function EditInvoice (props) {
     } 
 
     return (
-        <div className="new-invoice-container">
-            <h1 className="">Edit <span>#</span>{props.invoice.invoiceId}</h1>
+        <div className="main-invoice-form-container">
+            <h1 className="form-title">Edit <span>#</span>{props.invoice.invoiceId}</h1>
             <Formik 
                 initialValues={{ 
                     senderAddress: {street: inv.senderAddress.street, city: inv.senderAddress.city, state: inv.senderAddress.state, zipCode:inv.senderAddress.zipCode, country:inv.senderAddress.country},
@@ -93,8 +93,8 @@ export default function EditInvoice (props) {
                 {({ values, isSubmitting, errors })=>(
                 <Form>
                     <FormFields values={values}/>
-                    <button onClick={()=>props.toggleEditHide()}>Cancel</button>
-                    <input disabled={ isSubmitting } type="submit"/>
+                    <button onClick={()=>props.toggleEditHide()} className="button3">Cancel</button>
+                    <input disabled={ isSubmitting } type="submit" value="Save Changes" className="button1"/>
                     {/* <pre>{JSON.stringify(values,null,2)}</pre>
                     <pre>{JSON.stringify(errors,null,2)}</pre>  */}
                 </Form>

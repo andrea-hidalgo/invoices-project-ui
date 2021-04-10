@@ -64,8 +64,8 @@ h4 {
     color: v.$font-blue-grey;
 }
 
-button {
-    border-radius: 50px;
+button, input[type="submit"] {
+    border-radius: 50px !important;
     padding: 16px;
     height: 48px;
     border: none;
@@ -157,6 +157,7 @@ $desktop: 768px;
     margin: 14px 0;
     background-color: white;
     height: 134px;
+    text-align:center;
     &:hover {
         border: solid 1px v.$button1;
     }
@@ -249,6 +250,7 @@ $desktop: 768px;
 
             button {
                 margin: 0 5px;
+                outline:none;
             }
 
             @media (min-width: $tablet) {
@@ -428,3 +430,166 @@ $desktop: 768px;
         }
     }
 }
+
+//form fields
+
+input, select, option {
+    background-color: v.$input-background;
+    color: v.$input-color;
+    height:48px;
+    border: 1px solid v.$input-border;
+    border-radius: 4px !important;
+    padding-left: 20px;
+    font-family: inherit;
+    font-weight: 700;
+    outline: none;
+    margin-bottom: 24px;
+    &:focus{
+        border: 1px solid v.$input-active;
+    }
+}
+
+.main-invoice-form-container {
+    margin-bottom: 100px;
+    background-color: white;
+    padding:24px;
+    width:100vw;
+    @media (min-width: $tablet) {
+        width:80vw;
+        max-width: 720px;
+    }
+    @media (min-width: $desktop) {
+        width: 50%;
+        min-width: 612px;
+        max-width: 720px;
+    }
+    .form-title {
+        margin-bottom: 24px;
+        font-size:24px;
+        line-height:32px;
+        letter-spacing:-0.5px;
+        span {
+            color:v.$invoice-id;
+        }
+    }
+}
+
+.input-field-container {
+    display: flex;
+    flex-flow: column nowrap;
+    label{
+        margin-bottom: 10px;
+    }
+}
+
+.invoice-fields-container {
+    h4 {
+        color: v.$bill-title;
+        margin-bottom: 24px;
+    }
+
+    .full-width {
+        width:100%;
+        
+    }
+
+    
+}
+
+.address-bottom {
+    input {
+        width:100%;
+    }
+    > div:first-child {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: space-between;
+    }
+    > div div:first-child {
+        width: 45%;
+    }
+    > div div:nth-child(2) {
+        width: 20%;
+    }
+    > div div:nth-child(3) {
+        width: 30%;
+    }
+
+}
+
+.invoice-payments > *  {
+    width: 100%;
+    @media (min-width: $tablet) {
+        width:48%;
+    }
+}
+
+.invoice-payments {
+    @media (min-width: $tablet) {
+        display:flex;
+        flex-flow: row nowrap;
+        justify-content: space-between;
+    }
+}
+
+.items-list-form-container {
+    h2{
+        color: #777F98;
+        font-size: 18px;
+        line-height: 32px;
+        letter-spacing: -0.38px;
+        margin: 24px 0;
+    }
+    input {
+        width: 100%;
+    }
+    .invoice-form-item-container {
+        @media (min-width: $tablet) {
+            display: flex;
+            flex-flow: row nowrap;
+            justify-content: space-between;
+        }
+        > :nth-child(2) {
+            display: flex;
+            flex-flow: row nowrap;
+            justify-content: space-between;
+            align-items: center;
+            @media (min-width: $tablet) {
+                width: 60%;
+            }
+
+            :first-child {
+                width: 20%;
+            }
+
+            div:nth-child(2) {
+                width: 30%;
+            }
+            div:nth-child(3) {
+                width: 30%;
+                input {
+                    border: none;
+                    color: #888EB0;
+                    padding: 0;
+                }
+            }
+            button {
+                height:12px;
+                width:12px;
+                padding:10px;
+                display: flex;
+                flex-flow:column nowrap;
+                justify-content: center;
+                align-items: center;
+                color:white;
+                background-color: #9da2bb;
+            }
+        }
+    }
+}
+
+.new-item-btn {
+    width:100%;
+}
+
+

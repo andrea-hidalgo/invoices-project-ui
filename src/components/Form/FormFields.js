@@ -5,44 +5,51 @@ import { Field, useFormikContext, FieldArray} from 'formik';
 export default function FormFields ({}) {
     const { values } = useFormikContext()
     return(
-        <div>
+        <div className="invoice-fields-container">
             <div className="bill-form-container address-top">
-                <h3>Bill From</h3>
-                <InputField name="senderAddress.street" type="input" label="Street Address"/>
+                <h4>Bill From</h4>
+                <InputField className="full-width" name="senderAddress.street" type="input" label="Street Address"/>
                 <div className="address-bottom">
-                    <InputField name="senderAddress.city" type="input" label="City"/>
-                    <InputField name="senderAddress.state" type="input" label="State"/>
-                    <InputField name="senderAddress.zipCode" type="input" label="Zip Code"/>
-                    <InputField name="senderAddress.country" type="input" label="Country"/>
+                    <div>
+                        <InputField name="senderAddress.city" type="input" label="City"/>
+                        <InputField name="senderAddress.state" type="input" label="State"/>
+                        <InputField name="senderAddress.zipCode" type="input" label="Zip Code"/>
+                    </div>
+                    <InputField name="senderAddress.country" type="input" label="Country" className="full-width"/>
                 </div>
             </div>
             <div className="bill-to container">
-                <h3>Bill To</h3>
-                <InputField name="clientName" label="Client Name" type="input"/>
-                <InputField name="clientEmail" label="Client Email" type="email"/>
+                <h4>Bill To</h4>
+                <InputField name="clientName" label="Client Name" type="input" className="full-width"/>
+                <InputField name="clientEmail" label="Client Email" type="email" className="full-width"/>
                 <div className="address-top">
-                    <InputField name="clientAddress.street" type="input" label="Street Address"/>
+                    <InputField name="clientAddress.street" type="input" label="Street Address" className="full-width"/>
                 </div>
                 <div className="address-bottom">
-                    <InputField name="clientAddress.city" type="input" label="City"/>
-                    <InputField name="clientAddress.state" type="input" label="State"/>
-                    <InputField name="clientAddress.zipCode" type="input" label="Zip Code"/>
-                    <InputField name="clientAddress.country" type="input" label="Country"/>
+                    <div>
+                        <InputField name="clientAddress.city" type="input" label="City"/>
+                        <InputField name="clientAddress.state" type="input" label="State"/>
+                        <InputField name="clientAddress.zipCode" type="input" label="Zip Code"/>
+                    </div>
+                    <InputField name="clientAddress.country" type="input" label="Country" className="full-width"/>
                 </div>
             </div>
 
             <div className="invoice-payments">
                 <InputField name="createdAt" type="date" label="Invoice Date"/>
+                <div className="input-field-container">
+                <label className="body1" htmlFor="paymentTerms">Payment Terms</label>
                 <Field as="select" name="paymentTerms">
                     <option value={1}>Net 1 Day</option>
                     <option value={7}>Net 7 Days</option>
                     <option value={14}>Net 14 Days</option>
                     <option value={30}>Net 30 Days</option>
                 </Field>
+                </div>
             </div>
 
-            <InputField name="description" label="Project Description" type="input" placeholder="e.g Graphic Design Service"/>
-            <div className="items-form-container">
+            <InputField name="description" label="Project Description" type="input" placeholder="e.g Graphic Design Service" className="full-width"/>
+            <div className="items-list-form-container">
                 <h2>Item List</h2>
                 <FieldArray name="items">
                     {({remove, push})=> (
@@ -54,7 +61,7 @@ export default function FormFields ({}) {
                                 );
                             })
                             }
-                            <button type="button" onClick={() => push({name: '', quantity: 1, price: 0, total: 0})}>+ Add New Item</button> 
+                            <button type="button" className="new-item-btn button3" onClick={() => push({name: '', quantity: 1, price: 0, total: 0})}>+ Add New Item</button> 
                         </div>
                     )}
                 </FieldArray>

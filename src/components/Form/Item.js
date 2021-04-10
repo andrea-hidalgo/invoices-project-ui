@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { Field, useFormikContext, ErrorMessage } from 'formik';
+import { Field, useFormikContext} from 'formik';
 import InputField from './InputField'
 
 export default function Item ({index, remove}) {
@@ -15,13 +15,17 @@ export default function Item ({index, remove}) {
     }, [qty, price])
 
     return (
-        <div key={index} className="invoiceItemContainer">
+        <div className="invoice-form-item-container">
             <InputField name={`items.${index}.name`} placeholder="Service rendered" type="input" label="Item Name"/>
-            <InputField name={`items.${index}.quantity`} placeholder="1" type="number" label="Qty."/>
-            <InputField name={`items.${index}.price`} placeholder="0" type="number" label="Price"/>
-            <label htmlFor={`items.${index}.total`}>Total</label>
-            <Field name={`items.${index}.total`} placeholder="0" type="number" disabled/>
-            <button type="button" onClick={() => remove(index)}>X</button>
+            <div>
+                <InputField name={`items.${index}.quantity`} placeholder="1" type="number" label="Qty."/>
+                <InputField name={`items.${index}.price`} placeholder="0" type="number" label="Price"/>
+                <div className="input-field-container">
+                    <label className="body1" htmlFor={`items.${index}.total`}>Total</label>
+                    <Field name={`items.${index}.total`} placeholder="0" type="number" disabled/>
+                </div>
+                <button className="delete-icon" onClick={() => remove(index)}>x</button>
+            </div>
         </div>
     )
 }

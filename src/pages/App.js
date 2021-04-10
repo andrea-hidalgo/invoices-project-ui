@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import '../css/App.css';
 import '../css/styles.scss';
 import InvoiceList from '../components/InvoiceList'
 import NewInvoice from '../components/NewInvoice'

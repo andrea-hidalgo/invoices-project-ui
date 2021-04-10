@@ -101,6 +101,17 @@ button, input[type="submit"] {
     }
 }
 
+.error-message{
+    font-size: 10px;
+    color: v.$red;
+    line-height:15px;
+    letter-spacing: -0.21px;
+} 
+
+.invoice-status {
+
+}
+
 $tablet: 376px;
 $desktop: 768px;
 
@@ -592,11 +603,29 @@ input, select, option {
     }
 }
 
+.form-button-row {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-end;
+    align-items: center;
+    height: 112px;
+
+    input[type="submit"] {
+        margin-bottom: 0;
+    }
+}
+
 //Sidebar
 .sidebar-container {
     background-color: v.$sidebar-background;
     height: 72px;
     top:0;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content:space-between;
+    padding-right: 5%;
+
     @media (min-width: $tablet) {
         height:80px;
     }
@@ -605,6 +634,46 @@ input, select, option {
         height:100vh;
         position: fixed;
         left:0;
+        flex-flow:column nowrap;
+        padding:0;
+        border-radius: 0 20px 20px 0;
+    }
+    .logo-container {
+        width: 72px;
+        height:100%;
+        display: flex;
+        flex-flow: column nowrap;
+        justify-content:center;
+        align-items:center;
+        background-color: #7C5DFA;
+        border-radius: 0 20px 20px 0;
+        @media (min-width: $desktop) {
+            height: 103px;
+            width: 103px;
+        }
+
+        .logo {
+            width:28px;
+            height: 26px;
+            background-image: url(https://res.cloudinary.com/dfpyzncgn/image/upload/v1618067229/invoices/logo_kv9khn.svg);
+            background-position: center;
+            background-size: contain;
+            @media (min-width: $desktop) {
+                height:37px;
+                width:40px;
+            }
+        }
+    }
+    .user-picture {
+        height: 32px;
+        width: 32px;
+        border-radius: 40px;
+        background-image: url(https://res.cloudinary.com/dfpyzncgn/image/upload/v1618067229/invoices/image-avatar_gphjsy.jpg);
+        background-position: center;
+        background-size: contain;
+        @media (min-width: $desktop) {
+            margin-bottom: 20px;
+        }
     }
 }
 
@@ -660,4 +729,15 @@ input, select, option {
         margin-top: 72px;
     }
 
+}
+
+.invoice-status {
+    width: 104;
+    height: 40px;
+    border-radius: 8px;
+    padding: 12px 18px;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content:center;
+    margin-left: 10px;
 }

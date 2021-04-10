@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
 import '../css/styles.css';
 import EditInvoice from '../components/EditInvoice'
+import Sidebar from '../components/Sidebar'
 
 export default function Invoice (props) {
 
@@ -32,7 +33,6 @@ export default function Invoice (props) {
         return sliceDate;
         
     }
-
 
     const handleDelete = async e => {
 		try {
@@ -69,6 +69,7 @@ export default function Invoice (props) {
 
     return (
         <>
+        <Sidebar/>
         {Object.keys(invoice).length ? ( 
         <div id="invoice-page-container">
             <Link to={'/'}><p className="body1"><span>&#60;</span> Go back</p></Link>
@@ -161,7 +162,12 @@ export default function Invoice (props) {
             </section>
         </div>
         ) : <></>}
-        {editInvoiceHidden.invoiceHidden === false ? <EditInvoice invoice={invoice} setInvoice={setInvoice} toggleEditHide={toggleEditHide}/> : ''}
+        {editInvoiceHidden.invoiceHidden === false ? 
+            <div className="form-component-container">
+                <div className="opaque"></div>
+            <EditInvoice invoice={invoice} setInvoice={setInvoice} toggleEditHide={toggleEditHide}/>
+            </div>
+            : ''}
         </>
     )
 }

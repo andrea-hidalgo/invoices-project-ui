@@ -74,6 +74,7 @@ button, input[type="submit"] {
     letter-spacing: -0.25px;
     font-weight: 700;
     font-family: inherit;
+    outline:none;
 }
 
 .button1 {
@@ -450,13 +451,13 @@ input, select, option {
 }
 
 .main-invoice-form-container {
-    margin-bottom: 100px;
     background-color: white;
     padding:24px;
     width:100vw;
     @media (min-width: $tablet) {
         width:80vw;
         max-width: 720px;
+        border-radius: 0 20px 20px 0;
     }
     @media (min-width: $desktop) {
         width: 50%;
@@ -592,4 +593,23 @@ input, select, option {
     width:100%;
 }
 
+.form-component-container {
+    position: absolute;
+    top:80px;
+    z-index: 99999;
+    @media (min-width: $tablet) {
+        .opaque {
+            position:absolute;
+            top:0px;
+            width:100vw;
+            height:calc(100%);
+            z-index: -10;
+            background-color: rgba(0, 0, 0, 0.527)
+        }
+    }
+    @media (min-width: $desktop) {
+        top: 0px;
+        left: 103px;
+    }
+}
 

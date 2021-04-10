@@ -3,6 +3,7 @@ import '../css/styles.scss';
 import InvoiceList from '../components/InvoiceList'
 import NewInvoice from '../components/NewInvoice'
 import Header from '../components/Header'
+import Sidebar from '../components/Sidebar'
 
 export default function App() {
 
@@ -35,10 +36,14 @@ export default function App() {
         <InvoiceList 
           invoicesData={invoicesData} />) : ('')}
       {newInvoiceHidden.invoiceHidden === false ? (
+        <div className="form-component-container">
+          <div className="opaque"></div>
         <NewInvoice 
           invoicesData={invoicesData} 
           setInvoicesData={setInvoicesData}
-          toggleInvoiceHide={toggleInvoiceHide}/>) : ''}
+          toggleInvoiceHide={toggleInvoiceHide}/>
+          
+        </div>) : ''}
     </div>
   );
 }

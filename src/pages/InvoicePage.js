@@ -72,7 +72,7 @@ export default function Invoice (props) {
         <Sidebar/>
         {Object.keys(invoice).length ? ( 
         <div id="invoice-page-container">
-            <Link to={'/'}><p className="body1"><span>&#60;</span> Go back</p></Link>
+            <Link to={'/'}><p className="body1 go-back"><span>&#60;</span> Go back</p></Link>
             <header>
                     <div className="invoice-page-header-left">
                         <p className="body1">Status</p>

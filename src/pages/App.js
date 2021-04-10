@@ -29,12 +29,17 @@ export default function App() {
 
   return (
     <div className="App">
-      <Header 
-        toggleInvoiceHide={toggleInvoiceHide}
-        invoicesData={invoicesData} />
-      {invoicesData.length ? (
-        <InvoiceList 
-          invoicesData={invoicesData} />) : ('')}
+      <Sidebar />
+      <div className="page-component-container app-page-components">
+        <Header 
+          toggleInvoiceHide={toggleInvoiceHide}
+          invoicesData={invoicesData} />
+        {invoicesData.length ? (
+            <InvoiceList 
+              invoicesData={invoicesData} /> )
+          : ('')}
+      </div>
+
       {newInvoiceHidden.invoiceHidden === false ? (
         <div className="form-component-container">
           <div className="opaque"></div>

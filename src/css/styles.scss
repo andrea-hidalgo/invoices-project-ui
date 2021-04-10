@@ -135,6 +135,7 @@ $desktop: 768px;
 
 #invoice-list-header {
     @include main-container;
+    width: 100%;
     height: 59px;
     display:flex;
     flex-flow: row nowrap;
@@ -196,8 +197,14 @@ $desktop: 768px;
 
 // InvoicePage
 #invoice-page-container {
-    padding: 0 5%;
-    padding-bottom: 100px;
+    padding: 0 2% 100px 2%;
+
+    @media (min-width: $desktop) {
+        margin-left: 103px;
+        margin-top:0;
+        padding:0 0 0 10%;
+    }
+
     a {
         text-decoration: none;   
         p {
@@ -206,10 +213,6 @@ $desktop: 768px;
         }
     }
     
-    @media (min-width: $tablet) {
-        padding: 0;
-    }
-
     header {
         @include main-container;
         height: 91px;
@@ -589,15 +592,34 @@ input, select, option {
     }
 }
 
+//Sidebar
+.sidebar-container {
+    background-color: v.$sidebar-background;
+    height: 72px;
+    top:0;
+    @media (min-width: $tablet) {
+        height:80px;
+    }
+    @media (min-width: $desktop) {
+        width: 103px;
+        height:100vh;
+        position: fixed;
+        left:0;
+    }
+}
+
+//page component wrappers
+
 .new-item-btn {
     width:100%;
 }
 
 .form-component-container {
     position: absolute;
-    top:80px;
+    top:72px;
     z-index: 99999;
     @media (min-width: $tablet) {
+        top:80px;
         .opaque {
             position:absolute;
             top:0px;
@@ -613,3 +635,29 @@ input, select, option {
     }
 }
 
+.page-component-container {
+    margin-top: 72px;
+    @media (min-width: $tablet) {
+        margin-top: 80px;
+    }
+    @media (min-width: $desktop) {
+        margin-left: 103px;
+        margin-top:0;
+    }
+}
+
+.app-page-components {
+    padding:5%;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items:center;
+    @media (min-width: $tablet) {
+        display: inherit;
+    }
+    @media (min-width: $desktop) {
+        padding:0 0 0 10%;
+        margin-top: 72px;
+    }
+
+}

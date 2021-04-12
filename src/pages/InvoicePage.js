@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom';
 import '../css/styles.css';
 import EditInvoice from '../components/EditInvoice'
 import Sidebar from '../components/Sidebar'
+import DeleteModal from '../components/DeleteModal'
 
 export default function Invoice (props) {
 
@@ -11,8 +12,15 @@ export default function Invoice (props) {
         toggleEditInvoiceHidden({invoiceHidden: !editInvoiceHidden.invoiceHidden});
     }
 
+    const [deleteHidden, toggleDeleteHidden ] = useState({deleteHidden:true});
+    const toggleDeleteModal = () => {
+        toggleDeleteHidden({deleteHidden: !deleteHidden.deleteHidden});
+    }
+
     const [invoice, setInvoice] = useState({});
     const [didDelete, setDidDelete] = useState(false);
+    const [invoiceStatus, setInvoiceStatus] = useState("pending")
+    const [invoiceDate, setInvoiceDate] = useState('');
 
     useEffect(() => {
 		(async () => {
@@ -20,11 +28,16 @@ export default function Invoice (props) {
 				const response = await fetch(`/api/invoices/${props.match.params.id}`);
 				const data = await response.json();
 				setInvoice(data);
+                setInvoiceDate(invoice.createdAt)
 			} catch (error) {
 				console.error(error);
-			}
+			} 
 		})();
 	},[]);
+
+    useEffect(() => {
+        setInvoiceStatus(`${invoice.status}`)
+    }, [invoice])
 
     const formatDate = (date) => {
         const newDate = new Date(date);
@@ -32,6 +45,32 @@ export default function Invoice (props) {
         const sliceDate = formatDate.slice(3);
         return sliceDate;
         
+    }
+
+    const titleStatusStyle = () => {
+        if (invoiceStatus === "pending") {
+            return (
+                {backgroundColor: "rgb(255,143,0,0.2)"
+            }
+            )
+        } else if (invoiceStatus === "paid") {
+            return (
+                {backgroundColor: "rgb(51,214,159,0.2)"}
+            )
+        }
+    }
+
+    const textStatusStyle = () => {
+        if (invoiceStatus === "pending") {
+            return (
+                {color: "rgb(255,143,0)"
+            }
+            )
+        } else if (invoiceStatus === "paid") {
+            return (
+                {color: "rgb(51,214,159)"}
+            )
+        }
     }
 
     const handleDelete = async e => {
@@ -64,25 +103,30 @@ export default function Invoice (props) {
 			});
 			const data = await response.json();
 			setInvoice(data);
-		} catch (error) {}
+            
+		} catch (error) {
+            console.error(error);
+        }
+        setInvoiceStatus("paid");
 	};
 
     return (
         <>
         <Sidebar/>
+        {deleteHidden.deleteHidden === false ? (<DeleteModal invoice={invoice} handleDelete={handleDelete} toggleDeleteModal={toggleDeleteModal}/>) : ''}
         {Object.keys(invoice).length ? ( 
         <div id="invoice-page-container">
             <Link to={'/'}><p className="body1 go-back"><span>&#60;</span> Go back</p></Link>
             <header>
                     <div className="invoice-page-header-left">
                         <p className="body1">Status</p>
-                        <div className="invoice-status">
-                            <p className="invoice-status-text">{invoice.status}</p>
+                        <div className="invoice-status" style={titleStatusStyle()}>
+                            <h4 className="invoice-status-text" style={textStatusStyle()}>{invoice.status}</h4>
                         </div>
                     </div>
                     <div className="invoice-page-header-right">
                         <button className="edit-button button3" onClick={toggleEditHide}>Edit</button>
-                        <button className="delete-button button5" onClick={handleDelete}>Delete</button>
+                        <button className="delete-button button5" onClick={toggleDeleteModal}>Delete</button>
                         <button className="paid-button button1" onClick={handlePaid}>Mark as Paid</button>
                     </div>
             </header>
@@ -165,7 +209,7 @@ export default function Invoice (props) {
         {editInvoiceHidden.invoiceHidden === false ? 
             <div className="form-component-container">
                 <div className="opaque"></div>
-            <EditInvoice invoice={invoice} setInvoice={setInvoice} toggleEditHide={toggleEditHide}/>
+            <EditInvoice invoice={invoice} setInvoice={setInvoice} toggleEditHide={toggleEditHide} setInvoiceDate={setInvoiceDate} invoiceDate={invoiceDate}/>
             </div>
             : ''}
         </>

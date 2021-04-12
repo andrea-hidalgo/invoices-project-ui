@@ -1,9 +1,7 @@
 import React from 'react';
 import { Formik, Form } from 'formik';
 import FormFields from './Form/FormFields'
-
 import * as yup from  'yup';
-import Item from './Form/Item';
 
 export default function NewInvoice(props) {
 
@@ -38,7 +36,8 @@ export default function NewInvoice(props) {
     const validationSchema = yup.object({
         description: yup.string().required(),
         clientName: yup.string().required(),
-        clientEmail: yup.string().email().required()
+        clientEmail: yup.string().email().required(),
+        createdAt: yup.date().required()
     })
 
     return (
@@ -74,6 +73,7 @@ export default function NewInvoice(props) {
                         })
                         const submittedData = await response.json();
                         props.setInvoicesData([...props.invoicesData, submittedData])
+                        props.toggleInvoiceHide()
                     } catch(error) {
                         console.error(error);
                     }
@@ -87,8 +87,10 @@ export default function NewInvoice(props) {
                 {({ values, isSubmitting, errors })=>(
                 <Form>
                     <FormFields values={values}/>
-                    <button onClick={() =>props.toggleInvoiceHide()} className="button3">Discard</button>
-                    <input disabled={ isSubmitting } type="submit" className="button1"/>
+                    <div className="form-button-row">
+                        <button onClick={() =>props.toggleInvoiceHide()} className="button3">Discard</button>
+                        <input disabled={ isSubmitting } type="submit" className="button1"/>
+                    </div>
                     {/* <pre>{JSON.stringify(values,null,2)}</pre>
                     <pre>{JSON.stringify(errors,null,2)}</pre>  */}
                 </Form>

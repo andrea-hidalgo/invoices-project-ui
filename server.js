@@ -22,10 +22,10 @@ db.on('open', () => {
 app.use(express.json());
 app.use(cors());
 if (process.env.NODE_ENV !== 'development'){
-  app.use(express.static('public'))
+  app.use(express.static('build'))
 }
 
-app.use(/\.[0-9a-z]+$/i, express.static('public'));
+app.use(/\.[0-9a-z]+$/i, express.static('build'));
 
 /* Controller */
 app.use('/api/invoices', require('./controllers/invoices')) //you can require items inline instead of assigning to variable at top. industry practice.

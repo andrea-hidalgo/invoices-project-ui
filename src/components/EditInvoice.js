@@ -21,9 +21,12 @@ export default function EditInvoice (props) {
 
     const calculateDueDate = (values) => {
         const createdAt = new Date(values.createdAt);
-        const paymentTerms = values.paymentTerms;
+        const paymentTerms = parseInt(values.paymentTerms);
         const formatDate = new Date(Number(createdAt));
-        formatDate.setDate(createdAt.getDate() + paymentTerms);
+        formatDate.setDate(createdAt.getDate() + parseInt(paymentTerms));
+        console.log(createdAt);
+        console.log(paymentTerms);
+        console.log(formatDate)
         return formatDate;
     }
 
@@ -78,25 +81,28 @@ export default function EditInvoice (props) {
                             body: body
                         })
                         const submittedData = await response.json();
-                        props.setInvoice(submittedData)
-                        props.toggleEditHide()
+                        console.log('response', submittedData);
+                        props.setInvoice(submittedData);
                     } catch(error) {
                         console.error(error);
-                    }
+                    } 
                     //make async call 
                     // setSubmitting will make something happen (or not happen) while the form is in the process of being submitted
                     // in this case, while the async post request is happening, we could disable the submit button, so the form can't be submitted twice by mistake
-                    console.log('submit: ', data)
+                    console.log('data: ', data);
+                    props.toggleEditHide();
                     setSubmitting(false);
                 }}
             >
                 {({ values, isSubmitting, errors })=>(
                 <Form>
                     <FormFields values={values}/>
-                    <button onClick={()=>props.toggleEditHide()} className="button3">Cancel</button>
-                    <input disabled={ isSubmitting } type="submit" value="Save Changes" className="button1"/>
-                    {/* <pre>{JSON.stringify(values,null,2)}</pre>
-                    <pre>{JSON.stringify(errors,null,2)}</pre>  */}
+                    <div className="form-button-row">
+                        <button onClick={()=>props.toggleEditHide()} className="button3">Cancel</button>
+                        <input disabled={ isSubmitting } type="submit" value="Save Changes" className="button1"/>
+                    </div>
+                    <pre>{JSON.stringify(values,null,2)}</pre>
+                    <pre>{JSON.stringify(errors,null,2)}</pre> 
                 </Form>
             )}</Formik>
         </div>

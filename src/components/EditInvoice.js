@@ -101,8 +101,8 @@ export default function EditInvoice (props) {
                         <button onClick={()=>props.toggleEditHide()} className="button3">Cancel</button>
                         <input disabled={ isSubmitting } type="submit" value="Save Changes" className="button1"/>
                     </div>
-                    <pre>{JSON.stringify(values,null,2)}</pre>
-                    <pre>{JSON.stringify(errors,null,2)}</pre> 
+                    {/* <pre>{JSON.stringify(values,null,2)}</pre>
+                    <pre>{JSON.stringify(errors,null,2)}</pre>  */}
                 </Form>
             )}</Formik>
         </div>

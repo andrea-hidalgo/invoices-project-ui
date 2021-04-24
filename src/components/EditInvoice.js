@@ -20,14 +20,24 @@ export default function EditInvoice (props) {
     }
 
     const calculateDueDate = (values) => {
-        const createdAt = new Date(values.createdAt);
+        const invoiceDate = new Date(values.invoiceDate);
         const paymentTerms = parseInt(values.paymentTerms);
-        const formatDate = new Date(Number(createdAt));
-        formatDate.setDate(createdAt.getDate() + parseInt(paymentTerms));
-        console.log(createdAt);
+        const formatDate = new Date(Number(invoiceDate));
+        formatDate.setDate(invoiceDate.getDate() + parseInt(paymentTerms));
+        console.log(invoiceDate);
         console.log(paymentTerms);
         console.log(formatDate)
         return formatDate;
+    }
+
+    const formatInvoiceDate = (values) => {
+        return new Date(values.invoiceDate);
+    }
+
+    const invoiceDateInitialValue = () =>{
+        const invoiceDate = inv.invoiceDate;
+        const format = invoiceDate.slice(0,10)
+        return format;
     }
 
     const validationSchema = yup.object({
@@ -59,7 +69,7 @@ export default function EditInvoice (props) {
                     clientName: inv.clientName,
                     clientEmail: inv.clientEmail,
                     clientAddress: {street: inv.clientAddress.street, city: inv.clientAddress.city, state: inv.clientAddress.state, zipCode: inv.clientAddress.zipCode, country: inv.clientAddress.country},
-                    createdAt: inv.createdAt,
+                    invoiceDate: invoiceDateInitialValue(),
                     paymentTerms: inv.paymentTerms,
                     description: inv.description,
                     items: initialItemValues(),
@@ -71,7 +81,8 @@ export default function EditInvoice (props) {
                     setSubmitting(true);
                     const itemTotal= calculateTotal(data);
                     const dueDate = calculateDueDate(data);
-                    const body = JSON.stringify({...data, total: itemTotal, paymentDue: dueDate})
+                    const invoiceDateFormat = formatInvoiceDate(data);
+                    const body = JSON.stringify({...data, total: itemTotal, paymentDue: dueDate, invoiceDate:invoiceDateFormat})
                     try {
                         const response = await fetch(`/api/invoices/${dbID}`, {
                             method: 'PUT',

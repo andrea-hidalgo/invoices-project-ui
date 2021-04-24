@@ -16,11 +16,15 @@ export default function NewInvoice(props) {
     }
 
     const calculateDueDate = (values) => {
-        const createdAt = new Date(values.createdAt);
-        const paymentTerms = values.paymentTerms;
-        const formatDate = new Date(Number(createdAt));
-        formatDate.setDate(createdAt.getDate() + paymentTerms);
+        const invoiceDate = new Date(values.invoiceDate);
+        const paymentTerms = parseInt(values.paymentTerms);
+        const formatDate = new Date(Number(invoiceDate));
+        formatDate.setDate(invoiceDate.getDate() + paymentTerms);
         return formatDate;
+    }
+
+    const formatInvoiceDate = (values) => {
+        return new Date(values.invoiceDate);
     }
 
     const generateId = () => {
@@ -37,7 +41,7 @@ export default function NewInvoice(props) {
         description: yup.string().required(),
         clientName: yup.string().required(),
         clientEmail: yup.string().email().required(),
-        createdAt: yup.date().required()
+        invoiceDate: yup.date().required()
     })
 
     return (
@@ -49,7 +53,7 @@ export default function NewInvoice(props) {
                     clientName: '',
                     clientEmail: '',
                     clientAddress: {street: '', city:'', state: '', zipCode:'',country:''},
-                    createdAt:'',
+                    invoiceDate:'',
                     paymentTerms: 1,
                     description: '',
                     items: [{name: '', quantity: 1, price: 0, total: 0},],
@@ -59,10 +63,11 @@ export default function NewInvoice(props) {
                 validationSchema={validationSchema}
                 onSubmit={ async (data, {setSubmitting}) => {
                     setSubmitting(true);
-                    const itemTotal= calculateTotal(data);
+                    const itemTotal = calculateTotal(data);
+                    const invoiceDateFormat = formatInvoiceDate(data);
                     const dueDate = calculateDueDate(data);
                     const invoiceId = generateId();
-                    const body = JSON.stringify({...data, total: itemTotal, paymentDue: dueDate, invoiceId: invoiceId})
+                    const body = JSON.stringify({...data, total: itemTotal, invoiceDate: invoiceDateFormat, paymentDue: dueDate, invoiceId: invoiceId})
                     try {
                         const response = await fetch('/api/invoices', {
                             method: 'POST',

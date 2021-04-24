@@ -36,7 +36,7 @@ export default function FormFields ({}) {
             </div>
 
             <div className="invoice-payments">
-                <InputField name="createdAt" type="date" label="Invoice Date"/>
+                <InputField name="invoiceDate" type="date" label="Invoice Date"/>
                 <div className="input-field-container">
                 <label className="body1" htmlFor="paymentTerms">Payment Terms</label>
                 <Field as="select" name="paymentTerms">

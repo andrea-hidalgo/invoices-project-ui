@@ -20,7 +20,6 @@ export default function Invoice (props) {
     const [invoice, setInvoice] = useState({});
     const [didDelete, setDidDelete] = useState(false);
     const [invoiceStatus, setInvoiceStatus] = useState("pending")
-    const [invoiceDate, setInvoiceDate] = useState('');
 
     useEffect(() => {
 		(async () => {
@@ -28,7 +27,6 @@ export default function Invoice (props) {
 				const response = await fetch(`/api/invoices/${props.match.params.id}`);
 				const data = await response.json();
 				setInvoice(data);
-                setInvoiceDate(invoice.createdAt)
 			} catch (error) {
 				console.error(error);
 			} 
@@ -147,7 +145,7 @@ export default function Invoice (props) {
                     <div className="invoice-page-dates">
                         <div>
                             <p className="body1">Invoice Date</p>
-                            <p className="bold-text">{formatDate(invoice.createdAt)}</p>
+                            <p className="bold-text">{formatDate(invoice.invoiceDate)}</p>
                         </div>
                         <div>
                             <p className="body1">Payment Due</p>
@@ -209,7 +207,7 @@ export default function Invoice (props) {
         {editInvoiceHidden.invoiceHidden === false ? 
             <div className="form-component-container">
                 <div className="opaque"></div>
-            <EditInvoice invoice={invoice} setInvoice={setInvoice} toggleEditHide={toggleEditHide} setInvoiceDate={setInvoiceDate} invoiceDate={invoiceDate}/>
+            <EditInvoice invoice={invoice} setInvoice={setInvoice} toggleEditHide={toggleEditHide}/>
             </div>
             : ''}
         </>

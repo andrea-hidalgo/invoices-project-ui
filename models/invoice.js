@@ -2,8 +2,8 @@ const { Schema, model } = require('mongoose');
 
 const invoiceSchema = new Schema({
     invoiceId: String,
+    invoiceDate: {type:Date},
     paymentDue: {type:Date, default: Date.now},
-    createdAt: String,
     description: String,
     paymentTerms: Number,
     clientName: String,
@@ -25,8 +25,6 @@ const invoiceSchema = new Schema({
     },
     items: Array, 
     total: Number
-}, {
-    timestamps:true
 })
 
 module.exports = model('Invoice', invoiceSchema);
